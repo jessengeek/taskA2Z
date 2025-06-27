@@ -53,7 +53,7 @@
      dotenv.config();
 
      const { MONGO_USER, MONGO_PASS, MONGO_CLUSTER, MONGO_DB } = process.env;
-     const uri = `mongodb+srv://jessent2000:HF5qUu5kw8mz5Pwh@cluster0.3imtdmh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+     const uri = process.env.MONGOO_URI;
 
      export const connectDB = async () => {
        try {
