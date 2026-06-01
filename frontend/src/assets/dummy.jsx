@@ -12,7 +12,7 @@ import {
 
 // BACKEND TEST 
 // DUMMY DATA
-const backendDummy = [
+const _backendDummy = [
     {
         title: "Buy groceries",
         description: "Milk, bread, eggs, and spinach",
@@ -95,9 +95,9 @@ export const securityFields = [
 
 // SIDEBAR 
 export const menuItems = [
-    { text: "Dashboard", path: "/", icon: <Home className="w-5 h-5" /> },
-    { text: "Pending Tasks", path: "/pending", icon: <ListChecks className="w-5 h-5" /> },
-    { text: "Completed Tasks", path: "/complete", icon: <CheckCircle2 className="w-5 h-5" /> },
+    { text: "Dashboard", path: "/app", icon: <Home className="w-5 h-5" /> },
+    { text: "Pending Tasks", path: "/app/pending", icon: <ListChecks className="w-5 h-5" /> },
+    { text: "Completed Tasks", path: "/app/complete", icon: <CheckCircle2 className="w-5 h-5" /> },
 ]
 
 export const SIDEBAR_CLASSES = {

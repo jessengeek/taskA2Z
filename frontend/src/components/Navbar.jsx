@@ -45,7 +45,7 @@ const Navbar = ({ user = {}, onLogout }) => {
         <div className="flex items-center gap-4">
           <button
             className="p-2 text-gray-600 hover:text-purple-500 transition-colors duration-300 hover:bg-purple-50 rounded-full"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/app/profile")}
             aria-label="Settings"
           >
             <Settings className="w-5 h-5" />
@@ -88,7 +88,7 @@ const Navbar = ({ user = {}, onLogout }) => {
                   <button
                     onClick={() => {
                       setMenuOpen(false)
-                      navigate("/profile")
+                      navigate("/app/profile")
                     }}
                     className="w-full px-4 py-2.5 text-left hover:bg-purple-50 text-sm text-gray-700 transition-colors flex items-center gap-2 group"
                     role="menuitem"

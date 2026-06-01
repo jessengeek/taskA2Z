@@ -32,7 +32,7 @@ const App = () => {
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=random`
     };
     setCurrentUser(user);
-    navigate('/', { replace: true });
+   navigate('/app', { replace: true });
   };
 
   const handleLogout = () => {

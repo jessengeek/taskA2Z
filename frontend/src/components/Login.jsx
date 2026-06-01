@@ -31,7 +31,7 @@ const Login = ({ onSubmit, onSwitchMode }) => {
           if (data.success) {
             onSubmit?.({ token, userId, ...data.user })
             toast.success("Session restored. Redirecting...")
-            navigate("/")
+            navigate("/app")
           } else {
             localStorage.clear()
           }
@@ -63,7 +63,7 @@ const Login = ({ onSubmit, onSwitchMode }) => {
       setFormData(INITIAL_FORM)
       onSubmit?.({ token: data.token, userId: data.user.id, ...data.user })
       toast.success("Login successful! Redirecting...")
-      setTimeout(() => navigate("/"), 1000)
+      setTimeout(() => navigate("/app"), 1000)
     } catch (err) {
       const msg = err.response?.data?.message || err.message
       toast.error(msg)
