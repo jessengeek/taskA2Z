@@ -1,76 +1,98 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
-import { Lock, ChevronLeft, Shield, LogOut, Save, UserCircle } from "lucide-react"
-import { useNavigate } from "react-router-dom"
-import { toast, ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Lock,
+  ChevronLeft,
+  Shield,
+  LogOut,
+  Save,
+  UserCircle,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { INPUT_WRAPPER, FULL_BUTTON, SECTION_WRAPPER, BACK_BUTTON, DANGER_BTN, personalFields, securityFields } from '../assets/dummy'
+import {
+  INPUT_WRAPPER,
+  FULL_BUTTON,
+  SECTION_WRAPPER,
+  BACK_BUTTON,
+  DANGER_BTN,
+  personalFields,
+  securityFields,
+} from "../assets/dummy";
 
 // Constants & Dummy Data
-const API_URL = "http://localhost:4000"
+const API_URL = "https://taska2z.onrender.com";
 
 export default function Profile({ setCurrentUser, onLogout }) {
-  const [profile, setProfile] = useState({ name: "", email: "" })
-  const [passwords, setPasswords] = useState({ current: "", new: "", confirm: "" })
-  const navigate = useNavigate()
+  const [profile, setProfile] = useState({ name: "", email: "" });
+  const [passwords, setPasswords] = useState({
+    current: "",
+    new: "",
+    confirm: "",
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) return
+    const token = localStorage.getItem("token");
+    if (!token) return;
     axios
-      .get(`${API_URL}/api/user/me`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(({ data }) => {
-        if (data.success) setProfile({ name: data.user.name, email: data.user.email })
-        else toast.error(data.message)
+      .get(`${API_URL}/api/user/me`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch(() => toast.error("Unable to load profile."))
-  }, [])
+      .then(({ data }) => {
+        if (data.success)
+          setProfile({ name: data.user.name, email: data.user.email });
+        else toast.error(data.message);
+      })
+      .catch(() => toast.error("Unable to load profile."));
+  }, []);
 
   const saveProfile = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       const { data } = await axios.put(
         `${API_URL}/api/user/profile`,
         { name: profile.name, email: profile.email },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
       if (data.success) {
         setCurrentUser((prev) => ({
           ...prev,
           name: profile.name,
           avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
-            profile.name
+            profile.name,
           )}&background=random`,
-        }))
-        toast.success("Profile updated")
-      } else toast.error(data.message)
+        }));
+        toast.success("Profile updated");
+      } else toast.error(data.message);
     } catch (err) {
-      toast.error(err.response?.data?.message || "Profile update failed")
+      toast.error(err.response?.data?.message || "Profile update failed");
     }
-  }
+  };
 
   const changePassword = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (passwords.new !== passwords.confirm) {
-      return toast.error("Passwords do not match")
+      return toast.error("Passwords do not match");
     }
     try {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       const { data } = await axios.put(
         `${API_URL}/api/user/password`,
         { currentPassword: passwords.current, newPassword: passwords.new },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
       if (data.success) {
-        toast.success("Password changed")
-        setPasswords({ current: "", new: "", confirm: "" })
-      } else toast.error(data.message)
+        toast.success("Password changed");
+        setPasswords({ current: "", new: "", confirm: "" });
+      } else toast.error(data.message);
     } catch (err) {
-      toast.error(err.response?.data?.message || "Password change failed")
+      toast.error(err.response?.data?.message || "Password change failed");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -86,8 +108,12 @@ export default function Profile({ setCurrentUser, onLogout }) {
             {profile.name ? profile.name[0].toUpperCase() : "U"}
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Account Settings</h1>
-            <p className="text-gray-500 text-sm">Manage your profile and security settings</p>
+            <h1 className="text-3xl font-bold text-gray-800">
+              Account Settings
+            </h1>
+            <p className="text-gray-500 text-sm">
+              Manage your profile and security settings
+            </p>
           </div>
         </div>
 
@@ -95,7 +121,9 @@ export default function Profile({ setCurrentUser, onLogout }) {
           <section className={SECTION_WRAPPER}>
             <div className="flex items-center gap-2 mb-6">
               <UserCircle className="text-purple-500 w-5 h-5" />
-              <h2 className="text-xl font-semibold text-gray-800">Personal Information</h2>
+              <h2 className="text-xl font-semibold text-gray-800">
+                Personal Information
+              </h2>
             </div>
             <form onSubmit={saveProfile} className="space-y-4">
               {personalFields.map(({ name, type, placeholder, icon: Icon }) => (
@@ -105,7 +133,9 @@ export default function Profile({ setCurrentUser, onLogout }) {
                     type={type}
                     placeholder={placeholder}
                     value={profile[name]}
-                    onChange={(e) => setProfile({ ...profile, [name]: e.target.value })}
+                    onChange={(e) =>
+                      setProfile({ ...profile, [name]: e.target.value })
+                    }
                     className="w-full text-sm focus:outline-none"
                     required
                   />
@@ -155,5 +185,5 @@ export default function Profile({ setCurrentUser, onLogout }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
